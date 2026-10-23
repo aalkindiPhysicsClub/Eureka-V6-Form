@@ -100,17 +100,21 @@ function submitApplication() {
             }
             throw new Error('HTTP error! Status: ' + response.status);
         })
-        .then(function (payload) {
-            if (payload.success === true || payload.result === 'success') {
-                showSuccessModal();
-                setTimeout(function () {
-                    window.location.reload();
-                }, 2000);
-            } else {
-                console.error('Submission failed (Apps Script error):', payload);
-                alert('Mission failed. Try again.');
-            }
-        })
+      .then(function (payload) {
+    console.log("Google Apps Script response:", payload);
+
+    if (payload.success === true ||
+        payload.result === "success") {
+        showSuccessModal();
+
+        setTimeout(function () {
+            window.location.reload();
+        }, 2000);
+    } else {
+        console.error("Registration response:", payload);
+        alert("Mission failed: " + (payload.message || "Unknown error"));
+    }
+})
         .catch(function (error) {
             console.error('Network or Fetch Error:', error);
             alert('Could not reach HQ. Check your connection.');
