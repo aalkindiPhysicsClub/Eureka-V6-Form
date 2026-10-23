@@ -13,13 +13,13 @@
 }
 
 :root {
-    --gold: #f0c850;
-    --gold-hot: #ffe27a;
-    --pink: #ff2bd6;
-    --cyan: #00e5ff;
-    --ink: #0a0708;
-    --card: rgba(8, 6, 10, 0.82);
-    --line: rgba(240, 200, 80, 0.55);
+    --gold: #d1885e;       /* Soft peach orange */
+    --gold-hot: #eead81;   /* Light peach highlight */
+    --pink: #E88BAF;       /* Dusty pink */
+    --cyan: #C9A0DC;       /* Soft lavender purple */
+    --ink: #0A070D;
+    --card: rgba(12, 8, 18, 0.82);
+    --line: rgba(239, 164, 122, 0.4);
 }
 
 * {
@@ -139,8 +139,8 @@ body {
 }
 
 .hud-money {
-    color: #7CFF6B;
-    text-shadow: 0 0 10px rgba(124, 255, 107, 0.6);
+    color: #EFA8C7;
+    text-shadow: 0 0 10px rgba(232, 139, 175, 0.35);
     font-size: 1.05rem;
 }
 
@@ -425,7 +425,7 @@ body {
 }
 
 .passed-kicker {
-    color: #7CFF6B;
+    color: #ffad66;
     letter-spacing: 6px;
     text-transform: uppercase;
     font-size: 0.8rem;
