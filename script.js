@@ -101,7 +101,7 @@ function submitApplication() {
             throw new Error('HTTP error! Status: ' + response.status);
         })
         .then(function (payload) {
-            if (payload.result === 'success') {
+            if (payload.success === true || payload.result === 'success') {
                 showSuccessModal();
                 setTimeout(function () {
                     window.location.reload();
