@@ -1,0 +1,134 @@
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyeeBacofO6BptTH_VsHW9ZFMPEJfWfkD1pj4G2yuFhhstfVHbM5fHqe1KM5xAx1AKy/exec';
+
+document.addEventListener('DOMContentLoaded', function () {
+    tickClock();
+    setInterval(tickClock, 1000);
+
+    document.getElementById('application-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        submitApplication();
+    });
+});
+
+function tickClock() {
+    const now = new Date();
+    const hours = String(now.getHours()+1).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const clock = document.getElementById('hudClock');
+    if (clock) {
+        clock.textContent = hours + ':' + minutes;
+    }
+}
+
+function setInvalid(id, isInvalid) {
+    const group = document.getElementById(id).closest('.form-group');
+    if (group) {
+        group.classList.toggle('invalid', isInvalid);
+    }
+}
+
+function validateForm() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const familyName = document.getElementById('familyName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const matricule = document.getElementById('matricule').value.trim();
+    const joinReason = document.getElementById('joinReason').value.trim();
+
+    let firstInvalid = null;
+
+    const nameOk = firstName.length >= 2;
+    setInvalid('firstName', !nameOk);
+    if (!nameOk && !firstInvalid) firstInvalid = 'firstName';
+
+    const familyOk = familyName.length >= 2;
+    setInvalid('familyName', !familyOk);
+    if (!familyOk && !firstInvalid) firstInvalid = 'familyName';
+
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    setInvalid('email', !emailOk);
+    if (!emailOk && !firstInvalid) firstInvalid = 'email';
+
+    const phoneOk = /^[0-9+\-\s()]{7,}$/.test(phone);
+    setInvalid('phone', !phoneOk);
+    if (!phoneOk && !firstInvalid) firstInvalid = 'phone';
+
+    const matriculeOk = matricule.length >= 2;
+    setInvalid('matricule', !matriculeOk);
+    if (!matriculeOk && !firstInvalid) firstInvalid = 'matricule';
+
+    const reasonOk = joinReason.length >= 5;
+    setInvalid('joinReason', !reasonOk);
+    if (!reasonOk && !firstInvalid) firstInvalid = 'joinReason';
+
+    if (firstInvalid) {
+        document.getElementById(firstInvalid).focus();
+        return null;
+    }
+
+    return { firstName, familyName, email, phone, matricule, joinReason };
+}
+
+function submitApplication() {
+    const data = validateForm();
+    if (!data) {
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('firstName', data.firstName);
+    formData.append('familyName', data.familyName);
+    formData.append('fullName', data.firstName + ' ' + data.familyName);
+    formData.append('email', data.email);
+    formData.append('phone', data.phone);
+    formData.append('matricule', data.matricule);
+    formData.append('joinReason', data.joinReason);
+
+    const submitButton = document.getElementById('submitBtn');
+    submitButton.textContent = 'Loading...';
+    submitButton.disabled = true;
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        body: formData
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.text().then(function (text) {
+                    return text ? JSON.parse(text) : { result: 'success' };
+                });
+            }
+            throw new Error('HTTP error! Status: ' + response.status);
+        })
+        .then(function (payload) {
+            if (payload.result === 'success') {
+                showSuccessModal();
+                setTimeout(function () {
+                    window.location.reload();
+                }, 2000);
+            } else {
+                console.error('Submission failed (Apps Script error):', payload);
+                alert('Mission failed. Try again.');
+            }
+        })
+        .catch(function (error) {
+            console.error('Network or Fetch Error:', error);
+            alert('Could not reach HQ. Check your connection.');
+        })
+        .finally(function () {
+            submitButton.textContent = 'Start Mission';
+            submitButton.disabled = false;
+        });
+}
+
+function showSuccessModal() {
+    document.getElementById('successModal').classList.add('show');
+}
+
+function resetForm() {
+    document.getElementById('successModal').classList.remove('show');
+    document.getElementById('application-form').reset();
+    document.querySelectorAll('.form-group.invalid').forEach(function (group) {
+        group.classList.remove('invalid');
+    });
+}

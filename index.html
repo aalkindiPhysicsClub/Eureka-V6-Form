@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alkindi Physics Club — Crew Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+    <div class="palm left" aria-hidden="true"></div>
+    <div class="palm right" aria-hidden="true"></div>
+
+    <header class="hud">
+        <div class="hud-left">
+            <span class="hud-tag">⚛</span>
+            <span class="hud-clock" id="hudClock">21:47</span>
+        </div>
+        <div class="wanted" aria-label="Wanted level">
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+        </div>
+        <div class="hud-right">
+            <span class="hud-money">Eureka City </span>
+        </div>
+    </header>
+
+    <main class="container">
+        <form id="application-form" class="wanted-poster" novalidate>
+            <div class="caution-tape" aria-hidden="true"></div>
+
+            <div class="poster-stamp">WANTED</div>
+
+            <div class="poster-header">
+                <img src="Layer_1.png" alt="Alkindi Physics Club" class="cover-logo">
+                <p class="mission-kicker">NEW MISSION UNLOCKED</p>
+                <h1 class="cover-title">Crew Registration</h1>
+                <p class="cover-subtitle"> Univ Saad Dahleb · Pav 9 · 27/10/2026 </p>
+            </div>
+
+            <div class="fields">
+                <div class="form-group">
+                    <label for="firstName">
+                        <span class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 19c1.2-3.2 3.5-4.8 6.5-4.8S18.3 15.8 19.5 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        </span>
+                        Name
+                    </label>
+                    <input type="text" id="firstName" name="firstName" required autocomplete="given-name" placeholder="Enter your first name">
+                </div>
+
+                <div class="form-group">
+                    <label for="familyName">
+                        <span class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M4 20V6.5A1.5 1.5 0 0 1 5.5 5H16l4 4v11" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 5v4h4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 13h8M8 16.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        </span>
+                        Family name
+                    </label>
+                    <input type="text" id="familyName" name="familyName" required autocomplete="family-name" placeholder="Enter your family name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        <span class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5.5" width="17" height="13" rx="1.6" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 7.5 12 13l7.5-5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </span>
+                        Email
+                    </label>
+                    <input type="email" id="email" name="email" required autocomplete="email" placeholder="you@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">
+                        <span class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M8 3.8h8A1.7 1.7 0 0 1 17.7 5.5v13A1.7 1.7 0 0 1 16 20.2H8A1.7 1.7 0 0 1 6.3 18.5v-13A1.7 1.7 0 0 1 8 3.8Z" stroke="currentColor" stroke-width="1.8"/><path d="M10 17.6h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        </span>
+                        Phone number
+                    </label>
+                    <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="05 XX XX XX XX">
+                </div>
+
+                <div class="form-group span-2">
+                    <label for="matricule">
+                        <span class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="6" width="17" height="12" rx="1.5" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="12" r="2.1" stroke="currentColor" stroke-width="1.7"/><path d="M13.2 10.5h6M13.2 13.5h4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                        </span>
+                        Student matricule
+                    </label>
+                    <input type="text" id="matricule" name="matricule" required placeholder="Enter your student ID">
+                </div>
+
+                <div class="form-group span-2">
+                    <label for="joinReason">
+                        <span class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M5 6.5h10.5A2.5 2.5 0 0 1 18 9v4.2a2.5 2.5 0 0 1-2.5 2.5H10l-4.2 3v-3H6.5A1.5 1.5 0 0 1 5 14.2V6.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                        </span>
+                        What made you join the club
+                    </label>
+                    <textarea id="joinReason" name="joinReason" rows="4" required placeholder="Tell the crew why you showed up..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">
+                Start Mission
+            </button>
+            <p class="hint">Fill every field. No second chances, pal.</p>
+        </form>
+    </main>
+
+    <div id="successModal" class="modal" role="dialog" aria-labelledby="successTitle" aria-modal="true">
+        <div class="modal-content">
+            <p class="passed-kicker">Respect +</p>
+            <h2 id="successTitle">Mission Passed</h2>
+            <p>You're on the Alkindi crew list now.</p>
+            <p>We'll radio you soon.</p>
+            <button type="button" class="btn-submit" onclick="resetForm()">Register Another Recruit</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
