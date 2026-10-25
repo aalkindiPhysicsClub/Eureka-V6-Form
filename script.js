@@ -1,4 +1,5 @@
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxM-lEcyyyyp7n8Kju8XAvxWVObHPan1EiISunxVvgS4aA12OrV5m6L97CrFysmcKw/exec'
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby-4bezX2YYayWhDkhK_hLCDeK9wlOWS58JWhJwDUPE9gvKedJbxWlBhjcvUZlTQqgC/exec';
+
 document.addEventListener('DOMContentLoaded', function () {
     tickClock();
     setInterval(tickClock, 1000);
@@ -69,6 +70,11 @@ function validateForm() {
 }
 
 function submitApplication() {
+    const submitButton = document.getElementById('submitBtn');
+    if (submitButton.disabled) {
+        return;
+    }
+
     const data = validateForm();
     if (!data) {
         return;
@@ -83,7 +89,6 @@ function submitApplication() {
     formData.append('comWork', data.comWork);
     formData.append('joinReason', data.joinReason);
 
-    const submitButton = document.getElementById('submitBtn');
     submitButton.textContent = 'Loading...';
     submitButton.disabled = true;
 
@@ -92,31 +97,30 @@ function submitApplication() {
         body: formData
     })
         .then(function (response) {
-            if (response.ok) {
-                return response.text().then(function (text) {
-                    return text ? JSON.parse(text) : { result: 'success' };
-                });
+            if (!response.ok) {
+                throw new Error('HTTP error! Status: ' + response.status);
             }
-            throw new Error('HTTP error! Status: ' + response.status);
+            return response.text();
         })
-      .then(function (payload) {
-    console.log("Google Apps Script response:", payload);
+        .then(function (text) {
+            let payload;
+            try {
+                payload = JSON.parse(text);
+            } catch (parseError) {
+                throw new Error('Unexpected answer from the script. Check the Apps Script deployment.');
+            }
 
-    if (payload.success === true ||
-        payload.result === "success") {
-        showSuccessModal();
+            console.log('Apps Script response:', payload);
 
-        setTimeout(function () {
-            window.location.reload();
-        }, 2000);
-    } else {
-        console.error("Registration response:", payload);
-        alert("Mission failed: " + (payload.message || "Unknown error"));
-    }
-})
+            if (payload.success === true) {
+                showSuccessModal();
+            } else {
+                alert('Mission failed: ' + (payload.message || 'Unknown error'));
+            }
+        })
         .catch(function (error) {
-            console.error('Network or Fetch Error:', error);
-            alert('Could not reach HQ. Check your connection.');
+            console.error('Registration error:', error);
+            alert('Could not reach HQ. ' + (error.message || 'Check your connection.'));
         })
         .finally(function () {
             submitButton.textContent = 'Start Mission';
