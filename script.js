@@ -32,7 +32,7 @@ function validateForm() {
     const familyName = document.getElementById('familyName').value.trim();
     const email = document.getElementById('email').value.trim();
     const phone = document.getElementById('phone').value.trim();
-    const matricule = document.getElementById('matricule').value.trim();
+    const ComWork = document.getElementById('ComWork').value.trim();
     const joinReason = document.getElementById('joinReason').value.trim();
 
     let firstInvalid = null;
@@ -53,9 +53,9 @@ function validateForm() {
     setInvalid('phone', !phoneOk);
     if (!phoneOk && !firstInvalid) firstInvalid = 'phone';
 
-    const matriculeOk = matricule.length >= 2;
-    setInvalid('matricule', !matriculeOk);
-    if (!matriculeOk && !firstInvalid) firstInvalid = 'matricule';
+    const ComWorkOk = ComWork.length >= 2;
+    setInvalid('ComWork', !ComWorkOk);
+    if (!ComWorkOk && !firstInvalid) firstInvalid = 'ComWork';
 
     const reasonOk = joinReason.length >= 5;
     setInvalid('joinReason', !reasonOk);
@@ -66,7 +66,7 @@ function validateForm() {
         return null;
     }
 
-    return { firstName, familyName, email, phone, matricule, joinReason };
+    return { firstName, familyName, email, phone, ComWork, joinReason };
 }
 
 function submitApplication() {
@@ -81,7 +81,7 @@ function submitApplication() {
     formData.append('fullName', data.firstName + ' ' + data.familyName);
     formData.append('email', data.email);
     formData.append('phone', data.phone);
-    formData.append('matricule', data.matricule);
+    formData.append('ComWork', data.ComWork);
     formData.append('joinReason', data.joinReason);
 
     const submitButton = document.getElementById('submitBtn');
