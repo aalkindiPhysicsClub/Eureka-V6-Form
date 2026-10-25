@@ -1,4 +1,4 @@
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrtyQde5JlSMGJoP4P7-U4sq1r2fKxIlOe7vI6mCdhYGvjBAoYoG-RKMvNCZql9Fv9/exec
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrtyQde5JlSMGJoP4P7-U4sq1r2fKxIlOe7vI6mCdhYGvjBAoYoG-RKMvNCZql9Fv9/exec'
 document.addEventListener('DOMContentLoaded', function () {
     tickClock();
     setInterval(tickClock, 1000);
